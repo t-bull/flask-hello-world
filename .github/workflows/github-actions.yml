@@ -58,6 +58,8 @@ jobs:
           echo "${{ secrets.GH_PAT }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Package and push chart
+        env:
+          HELM_EXPERIMENTAL_OCI: 1
         run: |
           cd  Kubernetes
           helm chart save . ghcr.io/${{ github.repository }}/flask-hello-world:latest
