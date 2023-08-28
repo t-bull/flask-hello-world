@@ -1,0 +1,4 @@
+apiVersion: v2
+name: flask-hello-world
+version: 0.1.0
+description: A (very) simple flask app
