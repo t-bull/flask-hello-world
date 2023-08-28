@@ -1,4 +1,3 @@
-import os
 import pytest
 from unittest.mock import patch, Mock
 from flaskr.app import App
@@ -18,5 +17,3 @@ class TestApp:
 
     def test_configure_app(self):
         assert True is True
-
-
