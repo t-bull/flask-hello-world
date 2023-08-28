@@ -24,8 +24,8 @@ spec:
             - name: POSTGRES_PASSWD
               valueFrom:
                 secretKeyRef:
-                  name: db-password-secret
-                  key: password
+                  name: postgres-password
+                  key: postgres-password
           resources:
             requests:
               memory: {{ .Values.resources.requests.memory }}

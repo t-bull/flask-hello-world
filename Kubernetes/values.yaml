@@ -3,7 +3,7 @@
 replicaCount: 2
 
 image:
-  repository: https://ghcr.io
+  repository: https://ghcr.io/t-bull/flask-hello-world
 
 postgresPassword: "password"
 
