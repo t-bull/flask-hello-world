@@ -1,0 +1,66 @@
+name: Fruity Flask Application for Alluvial.Finance
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependancies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: |
+          pytest
+
+      - name: Static Code analysis
+        run: |
+          pip install flake8
+          flake8 . --exclude=venv* --statistics
+
+      - name: Helm linting
+        run: |
+          cd Kubernetes
+          helm lint
+
+      - name: Login to github container registry
+        run: echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build container and push
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}:latest .
+          docker push ghcr.io/${{ github.repository }}:latest
+
+      - name: Setup helm
+        uses: azure/setup-helm@v1
+        with:
+          version: "v3.5.2"
+
+      - name: Enable OCI
+        run: |
+          export HELM_EXPERIMENTAL_OCI=1
+
+      - name: Login to github
+        run: |
+          echo "${{ secrets.GH_PAT }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Package and push chart
+        run: |
+          cd  Kubernetes
+          helm chart save . ghcr.io/${{ github.repository }}/flask-hello-world:latest
+          helm chart push ghcr.io/${{ github.repository }}/flask-hello-world:latest

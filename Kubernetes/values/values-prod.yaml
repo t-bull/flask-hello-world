@@ -1,0 +1,28 @@
+replicaCount: 4
+
+image:
+  tag: dev
+
+configMap:
+  DBUSER: prod-user
+  DBNAME: fruit
+  DBPORT: 5432
+  DBHOST: profpostgres
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+probes:
+  liveness:
+    path: "/health"
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  readiness:
+    path: "/health"
+    initialDelaySeconds: 10
+    periodSeconds: 10

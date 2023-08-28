@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-world-config
+data:
+  .env |
+    DBUSER={{ .Values.configMap.DBUSER }}
+    DBNAME={{ .Values.configMap.DBNAME }}
+    DBPORT={{ .Values.configMap.DBPORT }}
+    DBHOST={{ .Values.configMap.DBHOST }}

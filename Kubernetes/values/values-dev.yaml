@@ -1,0 +1,10 @@
+replicaCount: 2
+
+image:
+  tag: dev
+
+configMap:
+  DBUSER: dev-user
+  DBNAME: fruit
+  DBPORT: 5432
+  DBHOST: devpostgres
