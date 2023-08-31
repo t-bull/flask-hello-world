@@ -30,8 +30,13 @@ class App:
         self.app.config['SQLALCHEMY_ECHO'] = True
 
     def setup_extensions(self):
-        self.db = SQLAlchemy(self.app)
-        self.init_database()
+        try:
+            self.db = SQLAlchemy(self.app)
+            self.init_database()
+            print("Database Connected")
+        except:
+            print("Database Exception")
+            pass
 
     def init_database(self):
         with self.app.app_context():

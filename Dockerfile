@@ -6,4 +6,4 @@ COPY . .
 ENV FLASK_APP=flaskr:create_app
 EXPOSE 5000
 
-CMD ['flask', 'run']
+CMD ["flask", "run", "--host=0.0.0.0"]
