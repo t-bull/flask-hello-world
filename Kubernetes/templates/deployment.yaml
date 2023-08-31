@@ -20,6 +20,10 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: .env
+          volumes:
+            - name: hello-world-config
+              configMap:
+                name: hello-world-config
           env:
             - name: POSTGRES_PASSWD
               valueFrom:
